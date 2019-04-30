@@ -5,30 +5,32 @@ import org.usfirst.frc.team5800.robot.superclasses.Command5800;
 
 public class CommandDriverAngle extends Command5800 {
 
-	double dist;
-	double angle;
+	double currentRad;
+	double targetRad;
+	double currentGyro;
 
 	public CommandDriverAngle(double angleTarget) {
-		super(driver);
-		
-		this.dist = (( Math.PI / 180 ) * angleTarget);
-		this.angle = angleTarget;
+		super(driverAngle);
+
+		this.currentGyro = CommandBase.sensors.getChassiAngle();
+		this.targetRad = (( Math.PI * angleTarget ) / 180);
+		this.currentRad = ((Math.PI * this.currentGyro)/180);
 	}
 
 	public void onStart() {
 		CommandBase.sensors.reset();
-		CommandBase.driver.anglePID(this.angle);
-		CommandBase.driver.on();
+		CommandBase.driverAngle.enable();
 	}
 
 	protected void execute() {}
 
 	protected boolean isDone() {
-		return CommandBase.driver.onTarget(); 
+		return true;
 	}
 
 	protected void onCompletion() {
-		CommandBase.driver.off();
+		driverAngle.actuatePID(this.targetRad - this.currentRad);
+		CommandBase.driverAngle.disable();
 	}
 
 }

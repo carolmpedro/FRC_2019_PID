@@ -21,6 +21,9 @@ public abstract class CommandBase extends Command {
 	// Create an instance of each subsystem here.
 	public static SubsystemSensors sensors = new SubsystemSensors();
 	public static SubsystemJoystick joystick = new SubsystemJoystick();
+	public static SubsystemDriverLeft driverLeft = new SubsystemDriverLeft();
+	public static SubsystemDriverRight driverRight = new SubsystemDriverRight();
+	public static SubsystemDriverAngle driverAngle = new SubsystemDriverAngle();
 	public static SubsystemDriver driver = new SubsystemDriver();
 
 	public static void init() {

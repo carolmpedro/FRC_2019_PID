@@ -6,25 +6,29 @@ public class CommandDriverPosition extends Command5800 {
 
 	double targetPosition;
 
+
 	public CommandDriverPosition(double targetPosition) {
-		super(driver);
+		super(driverLeft);
 		this.targetPosition = targetPosition;
 	}
 
 	public void onStart() {
 		CommandBase.sensors.reset();
-		CommandBase.driver.positionPID(this.targetPosition);
-		CommandBase.driver.off();
+		CommandBase.driverRight.actuatePID(this.targetPosition);
+		CommandBase.driverLeft.actuatePID(this.targetPosition);
+		CommandBase.driverLeft.enable();
+		CommandBase.driverRight.enable();
 	} 
 
 	protected void execute() {
 	}
 
 	protected boolean isDone() {
-		return CommandBase.driver.onTarget();
+		return true;
 	}
 
 	protected void onCompletion() {
-		CommandBase.driver.off();
+		CommandBase.driverRight.disable();
+		CommandBase.driverLeft.disable();
 	}
 }
